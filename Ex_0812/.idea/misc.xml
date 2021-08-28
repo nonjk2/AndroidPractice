@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/trgf4/AndroidStudioProjects/Ex_0812/app/src/main/res/drawable/selector_alarm.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/trgf4/AndroidStudioProjects/Ex_0812/app/src/main/res/drawable/selector_search.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/trgf4/AndroidStudioProjects/Ex_0812/app/src/main/res/layout/activity_button_effect.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/trgf4/AndroidStudioProjects/Ex_0812/app/src/main/res/layout/activity_lot.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/trgf4/AndroidStudioProjects/Ex_0812/app/src/main/res/layout/activity_visible.xml" value="0.36614583333333334" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
