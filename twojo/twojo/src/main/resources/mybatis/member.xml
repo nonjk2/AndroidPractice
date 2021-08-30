@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="m">
+
+	<!-- 회원가입 -->
+	<insert id="register" parameterType="InsertVO">
+	    insert into member values( 
+	    	seq_mem.nextVal,
+	        #{id}, 
+	        #{pw},
+	        #{name},
+	        #{addr},
+	        '0',
+			#{age}
+	    )
+    </insert>
+
+	<!--연습용-->
+	<select id="test" resultType="InsertVO">
+		select * from member
+	</select>
+
+	<!--채팅방 생성-->
+	<insert id="chatroominsert" parameterType="RoomInsertVO">
+		insert into chatroom values(
+		seq_mem.nextVal
+		)
+	</insert>
+
+	<insert id="insertMatch" parameterType="MatchingVO">
+		insert into matching values(
+		seq_mat.nextVal,
+		#{mem_idx},
+		room_seq.nextVal
+		)
+	</insert>
+
+	<insert id="chetroomjoin" parameterType="ChetJoinVO">
+		insert into matching values(
+		join_seq.nextVal,
+		#{mem_idx},
+		#{room_idx}
+		)
+	</insert>
+
+	<delete id="deleteMatch1" parameterType="MatchingVO">
+		delete from matching where mat_idx=#{mat_idx}+1 OR mat_idx=#{mat_idx}
+
+	</delete>
+
+	<delete id="deleteMatch2" parameterType="MatchingVO">
+		delete from matching where mat_idx=#{mat_idx}-1 OR mat_idx=#{mat_idx}
+
+	</delete>
+
+	<select id="selectmatidone" resultType="MatchingVO" parameterType="int">
+
+		select * from matching where mem_idx=#{mem_idx}
+	</select>
+		<!--+1 mat-->
+	<select id="selectmatid" resultType="MatchingVO" parameterType="int">
+
+		select * from matching where mat_idx=#{mat_idx}+1
+	</select>
+
+	<select id="selectmatidm" resultType="MatchingVO" parameterType="int">
+
+		select * from matching where mat_idx=#{mat_idx}-1
+	</select>
+</mapper>

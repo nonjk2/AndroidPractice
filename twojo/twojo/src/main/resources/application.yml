@@ -1,0 +1,35 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+spring:
+  mvc:
+    static-path-pattern: /static/**
+  datasource:
+    hikari:
+      poolName: Hikari
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: random
+    password: 1111
+jwt:
+  header: Authorization
+  secret: 3mjZaHLe1jj45PG9htBinkDgw8Gh2R1fFJNN70Q_zim2PxdmozGKfne5Q82UOuza8UTCs9hEZFUIc5vBqyUgMA
+  token-validity-in-seconds: 3600000
+mybatis:
+  mapper-locations: mybatis/*.xml
+  type-aliases-package: com.random.twojo.model
+
+
