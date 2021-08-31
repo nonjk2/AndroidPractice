@@ -12,17 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Twojo_A">
         <activity
-            android:name=".ChetActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ResisterActivity"
-            android:exported="true" />
-        <activity
             android:name=".MatchingActivity"
             android:exported="true" />
         <activity
             android:name=".login"
-            android:exported="true" />
+            android:exported="true" >
+
+
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -31,6 +28,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 
