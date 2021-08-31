@@ -1,0 +1,33 @@
+[33mcommit 8090a0f2f1c525f424b6bad38bc8ef6fb22b474f[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: nonjk2 <trgf456@naver.com>
+Date:   Sun Aug 29 02:05:33 2021 +0900
+
+    온클릭리스너
+    1.마진
+    2.src 넣기
+    3.버튼관리
+
+[33mcommit be680951aa3fd0e5e0a660b1d160e5ad32c33de5[m
+Author: nonjk2 <trgf456@naver.com>
+Date:   Sun Aug 29 02:02:37 2021 +0900
+
+    온클릭리스너 등
+    1.버튼생성 및 프레임레이아웃
+    2.ui 위치지정
+
+[33mcommit c607ac87eac88a6ec123fe670f7c60b79b7eddcf[m
+Author: nonjk2 <trgf456@naver.com>
+Date:   Sun Aug 29 01:59:44 2021 +0900
+
+    안드로이드 시작
+    1.레이아웃 설정
+    2.등등
+
+[33mcommit 2a1784e92575e5a2ca6c2b9ed6a87ede7da02062[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: nonjk2 <trgf456@naver.com>
+Date:   Sat Aug 28 23:22:04 2021 +0900
+
+    안드로이드 온클릭리스너
+    1.다이얼로그
+    2.사진추가 및 테마설정
+    3.인비지블 등

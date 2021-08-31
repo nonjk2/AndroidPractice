@@ -24,31 +24,18 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private NetworkHelper networkHelper;
     private ApiService apiService;
-    Button loginButton , resisterButton;
+    Button loginButton;
     EditText id_text, pw_text;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        resisterButton = findViewById(R.id.resister);
+
         loginButton = findViewById(R.id.loginApp1);
         id_text = findViewById(R.id.id);
         pw_text = findViewById(R.id.pw);
-
-
-
-        resisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(LoginActivity.this, ResisterActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,8 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                             String resultCode = result.getResultCode();
 
                             //받은 토큰 저장
-                            String mem_idx = result.getMem_idx();
-                            String token = response.headers().get("Authorization");
+                            String token = result.getToken();
                             String success = "200"; //로그인 성공
                             String errorId = "300"; //아이디 일치x
                             String errorPw = "400"; //비밀번호 일치x
@@ -116,11 +102,9 @@ public class LoginActivity extends AppCompatActivity {
                                 String userID = id_text.getText().toString();
                                 String userPassword = pw_text.getText().toString();
 
-                                setPreferenceID("mem_idx",mem_idx);
-
                                 //다른 통신을 하기 위해 token 저장
                                 setPreference("token", token);
-                                Toast.makeText(LoginActivity.this, resultCode, Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, userID + "님 환영합니다.", Toast.LENGTH_LONG).show();
 
                                 Intent intent = new Intent(LoginActivity.this, MatchingActivity.class);
                                 intent.putExtra("userId", userID);
@@ -161,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(Call<Authorization> call, Throwable t) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                         builder.setTitle("알림")
-                                .setMessage("아이디와 비밀번호를 확인해주세요.\n")
+                                .setMessage("아이디.\n")
                                 .setPositiveButton("확인", null)
                                 .create()
                                 .show();
@@ -172,29 +156,21 @@ public class LoginActivity extends AppCompatActivity {
 
     //데이터를 내부 저장소에 저장하기
     public void setPreference(String key, String value) {
-        SharedPreferences pref = getSharedPreferences("token", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(key, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(key, value);
-        editor.commit();
-    }
-
-    public void setPreferenceID(String key, String value) {
-        SharedPreferences pref = getSharedPreferences("mem_idx", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(key, value);
-        editor.commit();
+        editor.apply();
     }
 
     //내부 저장소에 저장된 데이터 가져오기
     public String getPreferenceString(String key) {
-        SharedPreferences pref = getSharedPreferences("token", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(key, MODE_PRIVATE);
         return pref.getString(key, "");
     }
 
-    public String getPreferenceStringID(String key) {
-        SharedPreferences pref = getSharedPreferences("mem_idx", MODE_PRIVATE);
-        return pref.getString(key, "");
+    @Override
+    protected void onDestroy() {
+        preferences.edit().remove("token");
+        super.onDestroy();
     }
-
-
 }
