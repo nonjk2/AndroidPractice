@@ -24,6 +24,7 @@ public class CorsConfig {
         config.addAllowedOrigin("http://localhost:3001");
         config.addAllowedOrigin("http://211.187.217.245:3000");
         config.addAllowedOrigin("http://61.255.47.188:3000");
+        config.addAllowedOrigin("*");
         config.addAllowedHeader("*"); //모든 header에 응답을 허용하겠다.
         config.addAllowedMethod("*"); //post, get, put, delete, patch 요청을 허용하겠다.
         config.setMaxAge(3600L);

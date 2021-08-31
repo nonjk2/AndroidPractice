@@ -2,6 +2,7 @@ package com.random.twojo.security.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.random.twojo.model.entity.MemberEntity;
 import com.random.twojo.security.auth.PrincipalDetails;
 import com.random.twojo.security.jwt.JwtToken;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -55,11 +57,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
+            JsonObject resultJson = new JsonObject();
+
 
             PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
             System.out.println("test");
-            //response.addHeader("Authorization", "Bearer "+jwtToken);
-            response.getWriter().append("Authorization:").append("Bearer " + JwtToken.createToken(principalDetailis.getUserIdx()) + "");
+            System.out.println(response.getStatus());
+            resultJson.addProperty("token","Bearer "+ JwtToken.createToken(principalDetailis.getUserIdx()));
+            resultJson.addProperty("result",response.getStatus());
+            response.getWriter().write(resultJson.toString());
+
+            response.addHeader("Authorization", "Bearer "+ JwtToken.createToken(principalDetailis.getUserIdx()));
+//            response.getWriter().append("Authorization:").append("Bearer " + JwtToken.createToken(principalDetailis.getUserIdx()) + "");
+
 
     }
 
