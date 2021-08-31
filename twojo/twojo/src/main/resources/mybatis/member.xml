@@ -1,73 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="m">
 
-	<!-- 회원가입 -->
-	<insert id="register" parameterType="InsertVO">
-	    insert into member values( 
-	    	seq_mem.nextVal,
-	        #{id}, 
-	        #{pw},
-	        #{name},
-	        #{addr},
-	        '0',
-			#{age}
-	    )
+    <!-- 회원가입 -->
+    <insert id="register" parameterType="InsertVO">
+        insert into member values(
+        seq_mem.nextVal,
+        #{id},
+        #{pw},
+        #{name},
+        #{addr},
+        '0',
+        #{age}
+        )
     </insert>
 
-	<!--연습용-->
-	<select id="test" resultType="InsertVO">
-		select * from member
-	</select>
+    <!--연습용-->
+    <select id="test" resultType="InsertVO">
+        select * from member
+    </select>
 
-	<!--채팅방 생성-->
-	<insert id="chatroominsert" parameterType="RoomInsertVO">
-		insert into chatroom values(
-		seq_mem.nextVal
-		)
-	</insert>
+    <!--채팅방 생성-->
+    <insert id="chatroominsert" parameterType="RoomInsertVO">
+        <selectKey keyProperty="room_idx" order="AFTER" resultType="int">
+            select room_seq.currVal from dual
+        </selectKey>
+        insert into chatroom values(
+        room_seq.nextVal
+        )
+    </insert>
+    <select id="messagelist" resultType="MessageVO">
+        select * from chatmessage where room_idx = #{room_idx} order by TIME DESC
 
-	<insert id="insertMatch" parameterType="MatchingVO">
-		insert into matching values(
-		seq_mat.nextVal,
-		#{mem_idx},
-		room_seq.nextVal
-		)
-	</insert>
+    </select>
 
-	<insert id="chetroomjoin" parameterType="ChetJoinVO">
-		insert into matching values(
-		join_seq.nextVal,
-		#{mem_idx},
-		#{room_idx}
-		)
-	</insert>
 
-	<delete id="deleteMatch1" parameterType="MatchingVO">
-		delete from matching where mat_idx=#{mat_idx}+1 OR mat_idx=#{mat_idx}
+    <select id="selectMember" resultType="MemberEntity" parameterType="int">
+        select * from member where mem_idx = #{idx}
+    </select>
 
-	</delete>
+    <!--auth토큰 확인-->
+    <select id="authMember" resultType="MemberEntity" parameterType="String">
+        select * from member where id = #{id}
+    </select>
 
-	<delete id="deleteMatch2" parameterType="MatchingVO">
-		delete from matching where mat_idx=#{mat_idx}-1 OR mat_idx=#{mat_idx}
+    <insert id="insertMatch" parameterType="MatchingVO">
+        insert into matching values(
+        seq_mat.nextVal,
+        #{mem_idx}
+        )
+    </insert>
 
-	</delete>
+    <insert id="chetroomjoin" parameterType="ChetJoinVO">
+        insert into chatroomjoin values(
+        join_seq.nextVal,
+        #{mem_idx},
+        #{room_idx}
+        )
+    </insert>
+    <insert id="chetroomjoin2" parameterType="ChetJoinVO">
+        insert into chatroomjoin values(
+        join_seq.nextVal,
+        #{mem_idx},
+        #{room_idx}+1
+        )
+    </insert>
 
-	<select id="selectmatidone" resultType="MatchingVO" parameterType="int">
+    <insert id="messageEnter" parameterType="MessageVO">
+        insert into chatmessage values(
+        message_seq.nextVal,
+		#{message,jdbcType=VARCHAR},
+        #{mem_idx},
+        #{room_idx},
+		SYSTIMESTAMP
+        )
+    </insert>
 
-		select * from matching where mem_idx=#{mem_idx}
-	</select>
-		<!--+1 mat-->
-	<select id="selectmatid" resultType="MatchingVO" parameterType="int">
+    <delete id="deleteMatch1" parameterType="MatchingVO">
+        delete from matching where mat_idx=#{mat_idx}+1 OR mat_idx=#{mat_idx}
 
-		select * from matching where mat_idx=#{mat_idx}+1
-	</select>
+    </delete>
 
-	<select id="selectmatidm" resultType="MatchingVO" parameterType="int">
+    <delete id="deleteMatch2" parameterType="MatchingVO">
+        delete from matching where mat_idx=#{mat_idx}-1 OR mat_idx=#{mat_idx}
 
-		select * from matching where mat_idx=#{mat_idx}-1
-	</select>
+    </delete>
+
+    <select id="selectmatidone" resultType="MatchingVO" parameterType="int">
+
+        select * from matching where mem_idx=#{mem_idx}
+    </select>
+    <!--+1 mat-->
+    <select id="selectmatid" resultType="MatchingVO" parameterType="int">
+
+        select * from matching where mat_idx=#{mat_idx}+1
+    </select>
+
+    <select id="selectmatidm" resultType="MatchingVO" parameterType="int">
+
+        select * from matching where mat_idx=#{mat_idx}-1
+    </select>
 </mapper>

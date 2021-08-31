@@ -1,4 +1,4 @@
-package com.random.twojo.config;
+package com.random.twojo.security.config;
 
 
 import org.springframework.context.annotation.Bean;

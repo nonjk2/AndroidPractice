@@ -1,5 +1,8 @@
-package com.random.twojo.config;
+package com.random.twojo.security.config;
 
+import com.random.twojo.security.error.CustomAuthenticationFailureHandler;
+import com.random.twojo.security.filter.JwtAuthenticationFilter;
+import com.random.twojo.security.filter.JwtAuthorizationFilter;
 import com.random.twojo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsFilter corsFilter;
     @Autowired
     MemberService memberService;
+    @Autowired
+    CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,7 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(corsFilter)
                 .formLogin().disable()//폼로그인 안씀
                 .httpBasic().disable()//기본 로그인 방법안씀 JWT사용하는 로그인 방법 사용할거임
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(),memberService))
                 .authorizeRequests()
                 .anyRequest().permitAll();
+        http.formLogin().failureHandler(customAuthenticationFailureHandler);
     }
 }

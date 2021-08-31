@@ -1,9 +1,7 @@
 package com.random.twojo.dao;
 
-import com.random.twojo.model.vo.ChetRoomJoinVo;
-import com.random.twojo.model.vo.InsertVO;
-import com.random.twojo.model.vo.MatchingVo;
-import com.random.twojo.model.vo.RoomInsertVo;
+import com.random.twojo.model.entity.MemberEntity;
+import com.random.twojo.model.vo.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,7 +34,7 @@ public class MemberDao {
         return sqlSession.delete("m.deleteMatch2",vo);
     }
 
-    public int chatInsert(ChetRoomJoinVo vo) {
+    public int chatInsert(RoomInsertVo vo) {
         return sqlSession.insert("m.chatroominsert", vo);
     }
     public MatchingVo SelectMatId(int mat_idx){
@@ -51,5 +49,27 @@ public class MemberDao {
     }
     public int chetRoomJoin(ChetRoomJoinVo vo){
         return sqlSession.insert("m.chetroomjoin",vo);
+    }
+
+    public int chetRoomJoin2(ChetRoomJoinVo vo) {
+        return sqlSession.insert("m.chetroomjoin2",vo);
+    }
+
+    public MemberEntity selectMember(int idx) {
+
+        return sqlSession.selectOne("m.selectMember" ,idx);
+    }
+
+
+    public MemberEntity authMember(String id) {
+        return sqlSession.selectOne("m.authMember",id);
+    }
+
+    public int MessageEnter(MessageVO vo) {
+        return sqlSession.insert("m.messageEnter",vo);
+    }
+
+    public List<MessageVO> selectMessage(MessageVO vo) {
+        return sqlSession.selectList("m.messagelist",vo);
     }
 }

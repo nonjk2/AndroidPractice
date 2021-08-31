@@ -2,15 +2,16 @@ package com.random.twojo.model.entity;
 
 
 import com.random.twojo.model.vo.InsertVO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.apache.ibatis.type.Alias;
 
 @Alias("MemberEntity")
 @Getter
 @Setter
+@ToString
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberEntity {
 
     private int mem_idx;
