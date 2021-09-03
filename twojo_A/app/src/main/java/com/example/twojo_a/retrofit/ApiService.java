@@ -2,7 +2,9 @@ package com.example.twojo_a.retrofit;
 
 import com.example.twojo_a.retrofit.dto.Authorization;
 import com.example.twojo_a.retrofit.dto.Login;
+import com.example.twojo_a.retrofit.dto.Resister;
 import com.example.twojo_a.retrofit.dto.Result;
+import com.example.twojo_a.retrofit.dto.Status;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,13 +17,14 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-    @GET("accounts/{accountid}")
-    Call<Authorization> getAccountInfo(@Header("Authorization")String authKey,
-    @Path("accountId")String accountId);
+
 
 
     @POST("login")
     Call<Authorization> getLoginResponse(@Body Login login);
+
+    @POST("member/registerMem")
+    Call<Status> resisterUser(@Body Resister resister);
 
 
 

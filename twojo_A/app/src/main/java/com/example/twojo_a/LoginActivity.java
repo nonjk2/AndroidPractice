@@ -24,7 +24,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private NetworkHelper networkHelper;
     private ApiService apiService;
-    Button loginButton;
+    Button loginButton , resisterButton;
     EditText id_text, pw_text;
     SharedPreferences preferences;
 
@@ -32,10 +32,24 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        resisterButton = findViewById(R.id.resister);
         loginButton = findViewById(R.id.loginApp1);
         id_text = findViewById(R.id.id);
         pw_text = findViewById(R.id.pw);
+
+
+
+        resisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(LoginActivity.this, ResisterActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(Call<Authorization> call, Throwable t) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                         builder.setTitle("알림")
-                                .setMessage("아이디.\n")
+                                .setMessage("아이디와 비밀번호를 확인해주세요.\n")
                                 .setPositiveButton("확인", null)
                                 .create()
                                 .show();
@@ -168,9 +182,5 @@ public class LoginActivity extends AppCompatActivity {
         return pref.getString(key, "");
     }
 
-    @Override
-    protected void onDestroy() {
-        preferences.edit().remove("token");
-        super.onDestroy();
-    }
+
 }
