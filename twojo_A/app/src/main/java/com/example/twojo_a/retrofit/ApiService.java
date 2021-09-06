@@ -1,11 +1,15 @@
 package com.example.twojo_a.retrofit;
 
 import com.example.twojo_a.retrofit.dto.Authorization;
+import com.example.twojo_a.retrofit.dto.Cheting;
+import com.example.twojo_a.retrofit.dto.ChetingInsert;
 import com.example.twojo_a.retrofit.dto.Login;
 import com.example.twojo_a.retrofit.dto.MatchingRoom;
 import com.example.twojo_a.retrofit.dto.Resister;
 import com.example.twojo_a.retrofit.dto.Result;
 import com.example.twojo_a.retrofit.dto.Status;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,6 +34,11 @@ public interface ApiService {
     @POST("matching/insert")
     Call<MatchingRoom> matching(@Header("Authorization") String token);
 
+    @POST("message/list")
+    Call<List<Cheting>> chetinglist(@Body MatchingRoom matchingRoom);
+
+    @POST("message/insert")
+    Call<Status> chetingInsert(@Header("Authorization") String token,@Body ChetingInsert chetingInsert);
 
 }
 

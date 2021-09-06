@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.twojo_a.retrofit.ApiService;
 import com.example.twojo_a.retrofit.NetworkHelper;
 import com.example.twojo_a.retrofit.dto.Authorization;
+import com.example.twojo_a.retrofit.dto.Cheting;
 import com.example.twojo_a.retrofit.dto.MatchingRoom;
 import com.example.twojo_a.retrofit.dto.Status;
 
@@ -57,7 +58,7 @@ public class MatchingActivity extends AppCompatActivity {
                                 MatchingRoom result = response.body();
                                 int room_idx = result.getRoom_idx();
 
-                                Intent intent = new Intent(MatchingActivity.this, login.class);
+                                Intent intent = new Intent(MatchingActivity.this, ChetActivity.class);
                                 intent.putExtra("room_idx",room_idx);
                                 startActivity(intent);
                                 MatchingActivity.this.finish();

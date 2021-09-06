@@ -106,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                             String resultCode = result.getResultCode();
 
                             //받은 토큰 저장
+                            String mem_idx = result.getMem_idx();
                             String token = response.headers().get("Authorization");
                             String success = "200"; //로그인 성공
                             String errorId = "300"; //아이디 일치x
@@ -114,6 +115,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (resultCode.equals(success)) {
                                 String userID = id_text.getText().toString();
                                 String userPassword = pw_text.getText().toString();
+
+                                setPreferenceID("mem_idx",mem_idx);
 
                                 //다른 통신을 하기 위해 token 저장
                                 setPreference("token", token);
@@ -175,9 +178,21 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    public void setPreferenceID(String key, String value) {
+        SharedPreferences pref = getSharedPreferences("mem_idx", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
     //내부 저장소에 저장된 데이터 가져오기
     public String getPreferenceString(String key) {
         SharedPreferences pref = getSharedPreferences("token", MODE_PRIVATE);
+        return pref.getString(key, "");
+    }
+
+    public String getPreferenceStringID(String key) {
+        SharedPreferences pref = getSharedPreferences("mem_idx", MODE_PRIVATE);
         return pref.getString(key, "");
     }
 
