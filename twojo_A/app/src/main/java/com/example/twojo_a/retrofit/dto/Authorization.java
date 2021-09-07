@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 public class Authorization {
 
 
+    @SerializedName("mem_idx")
+    private String mem_idx;
+
     @SerializedName("staff")
     public String staff;
 
@@ -14,6 +17,18 @@ public class Authorization {
 
     @SerializedName("result")
     public String resultCode;
+
+    public String getMem_idx() {
+        return mem_idx;
+    }
+
+    public void setMem_idx(String mem_idx) {
+        this.mem_idx = mem_idx;
+    }
+
+    public Authorization(String token) {
+        this.token = token;
+    }
 
     public String getStaff() {
         return staff;

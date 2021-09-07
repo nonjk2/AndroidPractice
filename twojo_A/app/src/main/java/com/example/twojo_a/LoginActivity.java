@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     private ApiService apiService;
     Button loginButton , resisterButton;
     EditText id_text, pw_text;
-    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                             String resultCode = result.getResultCode();
 
                             //받은 토큰 저장
-                            String token = result.getToken();
+                            String mem_idx = result.getMem_idx();
+                            String token = response.headers().get("Authorization");
                             String success = "200"; //로그인 성공
                             String errorId = "300"; //아이디 일치x
                             String errorPw = "400"; //비밀번호 일치x
@@ -116,9 +116,11 @@ public class LoginActivity extends AppCompatActivity {
                                 String userID = id_text.getText().toString();
                                 String userPassword = pw_text.getText().toString();
 
+                                setPreferenceID("mem_idx",mem_idx);
+
                                 //다른 통신을 하기 위해 token 저장
                                 setPreference("token", token);
-                                Toast.makeText(LoginActivity.this, userID + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, resultCode, Toast.LENGTH_LONG).show();
 
                                 Intent intent = new Intent(LoginActivity.this, MatchingActivity.class);
                                 intent.putExtra("userId", userID);
@@ -170,15 +172,27 @@ public class LoginActivity extends AppCompatActivity {
 
     //데이터를 내부 저장소에 저장하기
     public void setPreference(String key, String value) {
-        SharedPreferences pref = getSharedPreferences(key, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("token", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(key, value);
-        editor.apply();
+        editor.commit();
+    }
+
+    public void setPreferenceID(String key, String value) {
+        SharedPreferences pref = getSharedPreferences("mem_idx", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.commit();
     }
 
     //내부 저장소에 저장된 데이터 가져오기
     public String getPreferenceString(String key) {
-        SharedPreferences pref = getSharedPreferences(key, MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("token", MODE_PRIVATE);
+        return pref.getString(key, "");
+    }
+
+    public String getPreferenceStringID(String key) {
+        SharedPreferences pref = getSharedPreferences("mem_idx", MODE_PRIVATE);
         return pref.getString(key, "");
     }
 

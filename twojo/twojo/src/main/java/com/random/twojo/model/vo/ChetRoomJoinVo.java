@@ -13,5 +13,6 @@ public class ChetRoomJoinVo {
     private int join_idx;
     private int mem_idx;
     private int room_idx;
+    private int mat_idx;
 
 }

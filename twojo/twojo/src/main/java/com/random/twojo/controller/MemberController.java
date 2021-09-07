@@ -1,15 +1,23 @@
 package com.random.twojo.controller;
 
 
+
+import com.google.gson.JsonObject;
 import com.random.twojo.dao.MemberDao;
 import com.random.twojo.model.vo.InsertVO;
 import com.random.twojo.model.vo.MatchingVo;
 import com.random.twojo.model.vo.MessageVO;
-import com.random.twojo.model.vo.RoomInsertVo;
+
 import com.random.twojo.service.MemberService;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
@@ -23,21 +31,33 @@ public class MemberController {
     MemberDao memberDao;
 
     @PostMapping("/member/registerMem")
-    public int registerMember(@RequestBody InsertVO vo){
-        return memberService.postRegister(vo);
+    public String  registerMember(@RequestBody InsertVO vo){
+        System.out.println(vo);
+
+
+        JsonObject result = new JsonObject();
+        result.addProperty("d",memberService.postRegister(vo));
+
+        return  result.toString();
     }
     @PostMapping("/matching/insert")
-    public int matching(InsertVO vo, Principal principal){
+    public String matching(InsertVO vo, Principal principal, HttpSession session){
 
-        return memberService.matching(vo , principal);
+        return memberService.matching(vo , principal,session);
     }
     @PostMapping("/message/insert")
-    public int MessageEnter(@RequestBody MessageVO vo, Principal principal){
-        return memberService.MessageEnter(vo , principal);
+    public String MessageEnter(@RequestBody MessageVO vo, Principal principal){
+
+         JsonObject result = new JsonObject();
+         result.addProperty("e",memberService.MessageEnter(vo , principal));
+         return result.toString();
     }
 
     @PostMapping("/message/list")
-    public List<MessageVO> Messages(@RequestBody MessageVO vo){
+    public List<MessageVO> Messages(@RequestBody MessageVO vo ){
+
+
+
         return memberService.Messages(vo);
     }
 
@@ -51,6 +71,7 @@ public class MemberController {
     public List<InsertVO> list(){
         return memberDao.testList();
     }
+
 
 
 }

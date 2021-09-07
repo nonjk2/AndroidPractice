@@ -21,4 +21,5 @@ public class MessageVO {
     private int mem_idx;
     private int room_idx;
     private Timestamp TIME;
+    private int viewType;
 }

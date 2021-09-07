@@ -42,6 +42,10 @@
         select * from member where mem_idx = #{idx}
     </select>
 
+    <select id="selectroom" resultType="ChetJoinVO" parameterType="int">
+        select * from chatroomjoin where mat_idx = #{mat_idx}
+    </select>
+
     <!--auth토큰 확인-->
     <select id="authMember" resultType="MemberEntity" parameterType="String">
         select * from member where id = #{id}
@@ -58,14 +62,16 @@
         insert into chatroomjoin values(
         join_seq.nextVal,
         #{mem_idx},
-        #{room_idx}
+        #{room_idx},
+        #{mat_idx}
         )
     </insert>
     <insert id="chetroomjoin2" parameterType="ChetJoinVO">
         insert into chatroomjoin values(
         join_seq.nextVal,
         #{mem_idx},
-        #{room_idx}+1
+        #{room_idx}+1,
+        #{mat_idx}
         )
     </insert>
 

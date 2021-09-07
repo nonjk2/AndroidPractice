@@ -51,6 +51,8 @@ public class MemberDao {
         return sqlSession.insert("m.chetroomjoin",vo);
     }
 
+
+
     public int chetRoomJoin2(ChetRoomJoinVo vo) {
         return sqlSession.insert("m.chetroomjoin2",vo);
     }
@@ -71,5 +73,9 @@ public class MemberDao {
 
     public List<MessageVO> selectMessage(MessageVO vo) {
         return sqlSession.selectList("m.messagelist",vo);
+    }
+
+    public ChetRoomJoinVo Selectroom(int mat_idx) {
+        return sqlSession.selectOne("m.selectroom",mat_idx);
     }
 }

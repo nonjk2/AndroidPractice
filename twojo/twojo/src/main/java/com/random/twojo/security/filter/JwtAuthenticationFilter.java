@@ -65,6 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             System.out.println(response.getStatus());
             resultJson.addProperty("token","Bearer "+ JwtToken.createToken(principalDetailis.getUserIdx()));
             resultJson.addProperty("result",response.getStatus());
+            resultJson.addProperty("mem_idx",principalDetailis.getUserIdx());
             response.getWriter().write(resultJson.toString());
 
             response.addHeader("Authorization", "Bearer "+ JwtToken.createToken(principalDetailis.getUserIdx()));

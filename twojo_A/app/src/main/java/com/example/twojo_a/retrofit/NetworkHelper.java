@@ -2,6 +2,7 @@ package com.example.twojo_a.retrofit;
 
 import java.lang.invoke.ConstantCallSite;
 import java.lang.reflect.Constructor;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,6 +21,11 @@ public class NetworkHelper {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .connectTimeout(10, TimeUnit.MINUTES)
+                .readTimeout(10,TimeUnit.MINUTES)
+                .writeTimeout(10,TimeUnit.MINUTES)
+                .callTimeout(10,TimeUnit.MINUTES)
+                .pingInterval(5,TimeUnit.SECONDS)
                 .build();
 
         retrofit = new Retrofit.Builder()
