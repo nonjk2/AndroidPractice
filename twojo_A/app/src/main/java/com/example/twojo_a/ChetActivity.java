@@ -27,6 +27,8 @@ import com.example.twojo_a.retrofit.dto.Status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +42,7 @@ public class ChetActivity extends AppCompatActivity {
     EditText insertText;
     private NetworkHelper networkHelper;
     private ApiService apiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +52,27 @@ public class ChetActivity extends AppCompatActivity {
         insertText = findViewById(R.id.sendMessage);
         insertButton = findViewById(R.id.sendMessageButton);
         recyclerView = findViewById(R.id.recycleview2);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChetActivity.this,RecyclerView.VERTICAL,true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChetActivity.this, RecyclerView.VERTICAL, true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        ExampleThread thread;
+        Timer timer = new Timer();
 
-        ChethingMessage();
+        TimerTask TT = new TimerTask() {
+            @Override
+            public void run() {
+                // 반복실행할 구문
+                ChethingMessage();
+            }
+
+        };
+
+
+
+        timer.schedule(TT, 0, 1000); //Timer 실행
+
+
+
+
         insertButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,18 +81,19 @@ public class ChetActivity extends AppCompatActivity {
                 int room_idx = intent.getExtras().getInt("room_idx");
                 String Message = insertText.getText().toString().trim();
                 String token = getPreferenceString("token");
-                ChetingInsert chetingInsert = new ChetingInsert(Message,room_idx);
+                ChetingInsert chetingInsert = new ChetingInsert(Message, room_idx);
 
                 networkHelper = NetworkHelper.getInstance();
                 apiService = NetworkHelper.getApiService();
 
 
-                apiService.chetingInsert(token,chetingInsert).enqueue(new Callback<Status>() {
+                apiService.chetingInsert(token, chetingInsert).enqueue(new Callback<Status>() {
                     @Override
                     public void onResponse(Call<Status> call, Response<Status> response) {
                         Toast.makeText(ChetActivity.this,
                                 "보내기완료", Toast.LENGTH_LONG).show();
-                                    ChethingMessage();
+                        ChethingMessage();
+                        insertText.setText(null);
                     }
 
                     @Override
@@ -84,12 +105,11 @@ public class ChetActivity extends AppCompatActivity {
 
             }
         });
-        ChethingMessage();
-
 
 
     }
-    public void ChethingMessage(){
+
+    public void ChethingMessage() {
 
 
         Intent intent = getIntent();
@@ -99,18 +119,27 @@ public class ChetActivity extends AppCompatActivity {
 
         networkHelper = NetworkHelper.getInstance();
         apiService = NetworkHelper.getApiService();
-        SharedPreferences sharedPreferences = getSharedPreferences("mem_idx",0);
-        int member_idx = Integer.parseInt(sharedPreferences.getString("mem_idx","" ));
+        SharedPreferences sharedPreferences = getSharedPreferences("mem_idx", 0);
+        int member_idx = Integer.parseInt(sharedPreferences.getString("mem_idx", ""));
         Cheting cheting = null;
         apiService.chetinglist(matchingRoom).enqueue(new Callback<List<Cheting>>() {
             @Override
             public void onResponse(Call<List<Cheting>> call, Response<List<Cheting>> response) {
-                Log.d("MainActivity", response.body().toString());
+
                 dataList = response.body();
+
+//                dataList = new ArrayList<>();
+
+                for (int i = 0; i < dataList.size(); i++) {
+
+                    if (member_idx == dataList.get(i).getMem_idx()) {
+                        dataList.get(i).setViewType(Code.ViewTpye.RIGHT_CONTENT);
+                    }
+
+                }
 
                 mAdapter = new MessageAdapter(dataList);
                 recyclerView.setAdapter(mAdapter);
-
 
 
             }
@@ -124,8 +153,30 @@ public class ChetActivity extends AppCompatActivity {
         });
 
     }
+
     public String getPreferenceString(String key) {
         SharedPreferences pref = getSharedPreferences(key, MODE_PRIVATE);
         return pref.getString(key, "");
     }
+
+    public class ExampleThread extends Thread {
+
+        private int threadNum;
+
+        public ExampleThread(int threadNum) {
+            this.threadNum = threadNum;
+
+        }
+    }
+
+    public void run() {
+        ChethingMessage();
+        try {
+            Thread.sleep(1000);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -23,6 +23,8 @@ public class Cheting {
     @SerializedName("time")
     @Expose
     private Timestamp time;
+    @SerializedName("viewType")
+    @Expose
     private int viewType;
 
 

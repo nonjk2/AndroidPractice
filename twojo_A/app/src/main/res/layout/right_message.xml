@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
-                android:background="#ffffff"
+                android:background="#C8FFEB3B"
                 android:maxLength="150"
                 android:maxLines="15"
                 android:padding="10dp"
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:text="데모 2020-03-12 12:30" />
+                android:text="2020-03-12 12:30" />
         </LinearLayout>
     </LinearLayout>
 

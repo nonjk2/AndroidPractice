@@ -47,11 +47,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof LeftViewHolder){
-            ((LeftViewHolder)holder).textv_msg.setText(mChetData.get(position).getMessage());
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+        if(viewHolder instanceof LeftViewHolder){
+            ((LeftViewHolder)viewHolder).textv_msg.setText(mChetData.get(position).getMessage());
         }else{
-            ((RightViewHolder)holder).textv_msg.setText(mChetData.get(position).getMessage());
+            ((RightViewHolder)viewHolder).textv_msg.setText(mChetData.get(position).getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        return mChetData.get(position).getViewType();
     }
 
     public class LeftViewHolder extends RecyclerView.ViewHolder{
