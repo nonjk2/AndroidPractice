@@ -7,47 +7,40 @@
     tools:context=".ChetActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleview2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/layout1"
-        android:background="#920B2323"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:id="@+id/recycleview2"/>
 
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_alignParentBottom="true"
-        android:background="#3C3737"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="1dp">
-
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/sendMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-
-            android:layout_weight="9"
-            android:background="@drawable/edit_moseri"
-            android:inputType="textMultiLine|textNoSuggestions"
+            android:background="#ffffff"
             android:maxLength="120"
             android:maxLines="5"
-            android:padding="10dp"
-            android:privateImeOptions="defaultInputmode=korean"></EditText>
-
+            android:padding="6dp"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"/>
         <ImageButton
             android:id="@+id/sendMessageButton"
+            android:src="@drawable/submit"
+            android:background="#E7F6FF"
             android:layout_width="0dp"
-            android:layout_height="30dp"
-
             android:layout_weight="1"
-            android:background="#00E7F6FF"
+            android:layout_height="60dp"
             android:foreground="?attr/selectableItemBackground"
             android:scaleType="fitXY"
-            android:src="@drawable/submit2" />
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
 </RelativeLayout>
